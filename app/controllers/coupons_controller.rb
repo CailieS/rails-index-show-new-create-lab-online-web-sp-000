@@ -1,17 +1,19 @@
-class CouponsController < ActionController::Base
-   def create
-    coupon = Coupon.create(store: params[:store], coupon_code: params[:coupon_code])
-    redirect_to coupon_path(coupon)
-   end
-   
+class CouponsController < ApplicationController
    def index
-      @coupons = Coupon.all
+     @coupons = Coupon.all
    end
-
-   def new
-   end
-
+ 
    def show
-      @coupon = Coupon.find(params[:id])
+     @coupon = Coupon.find(params[:id])
    end
-end
+ 
+   def create
+     @coupon = Coupon.new
+     @coupon.coupon_code = params[:coupon][:coupon_code]
+     @coupon.store = params[:coupon][:store]
+     @coupon.save
+     redirect_to coupon_path(@coupon)
+   end
+ 
+ 
+ end 
